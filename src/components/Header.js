@@ -1,7 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Container } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
   text: {
     color: theme.colors.white,
-    padding: 16,
+    paddingBottom: 16,
   },
 }));
 
@@ -22,14 +23,22 @@ const Header = ({ title }) => {
   return (
     <div className={styles.border}>
       <Grid className={styles.root} container direction="row">
-        <Grid item>
+        <Container>
           <Typography variant="h2" className={styles.text}>
             {title}
           </Typography>
-        </Grid>
+        </Container>
       </Grid>
     </div>
   );
+};
+
+Header.propTypes = {
+  title: PropTypes.string,
+};
+
+Header.defaultProps = {
+  title: 'You forgot to set a title!',
 };
 
 export default Header;
