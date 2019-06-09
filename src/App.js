@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
-import Hello from './Hello';
 import { createMuiTheme } from '@material-ui/core/styles';
-
 import { ThemeProvider } from '@material-ui/styles';
+import Hello from './Hello';
+import Dashboard from './components/Dashboard';
 
-//TODO: move any global styles here
+// TODO: move any global styles here
 export const theme = createMuiTheme({
   coolGradient:
     'linear-gradient(90deg, rgba(163,100,217,1) 0%, rgba(12,215,246,1) 100%)',
@@ -18,6 +18,13 @@ export const theme = createMuiTheme({
       light: '#EFEFEF',
     },
   },
+  overrides: {
+    MuiContainer: {
+      root: {
+        marginTop: 32,
+      },
+    },
+  },
 });
 
 function App() {
@@ -27,7 +34,7 @@ function App() {
         <div>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">Dashboard</Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
@@ -39,7 +46,7 @@ function App() {
 
           <hr />
 
-          <Route exact path="/" component={Hello} />
+          <Route exact path="/" component={Dashboard} />
           <Route path="/about" component={Hello} />
           <Route path="/topics" component={Hello} />
         </div>
