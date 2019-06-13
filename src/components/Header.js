@@ -14,11 +14,16 @@ const useStyles = makeStyles(theme => ({
   },
   text: {
     color: theme.colors.white,
+    paddingBottom: 8,
+  },
+  subtext: {
+    color: theme.colors.grey.light,
     paddingBottom: 16,
+    marginLeft: 4,
   },
 }));
 
-const Header = ({ title }) => {
+const Header = ({ title, subtitle }) => {
   const styles = useStyles();
   return (
     <div className={styles.border}>
@@ -26,6 +31,9 @@ const Header = ({ title }) => {
         <Container>
           <Typography variant="h2" className={styles.text}>
             {title}
+          </Typography>
+          <Typography variant="subtitle1" className={styles.subtext}>
+            {subtitle}
           </Typography>
         </Container>
       </Grid>
@@ -35,10 +43,12 @@ const Header = ({ title }) => {
 
 Header.propTypes = {
   title: PropTypes.string,
+  subtitle: PropTypes.string,
 };
 
 Header.defaultProps = {
   title: 'You forgot to set a title!',
+  subtitle: '',
 };
 
 export default Header;

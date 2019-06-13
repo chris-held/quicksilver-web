@@ -5,6 +5,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Hello from './Hello';
 import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 
 // TODO: move any global styles here
 export const theme = createMuiTheme({
@@ -15,7 +16,7 @@ export const theme = createMuiTheme({
     white: '#FFF',
     grey: {
       dark: '#333333',
-      light: '#EFEFEF',
+      light: '#CCC',
     },
   },
   overrides: {
@@ -47,8 +48,8 @@ function App() {
           <hr />
 
           <Route exact path="/" component={Dashboard} />
-          <Route path="/about" component={Hello} />
-          <Route path="/topics" component={Hello} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Hello} />
         </div>
       </Router>
     </ThemeProvider>
