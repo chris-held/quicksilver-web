@@ -36,9 +36,6 @@ const Login = ({ history }) => {
                     type="text"
                     id="email"
                     label="Email"
-                    // value={values.email}
-                    // helperText={touched.email ? errors.email : ''}
-                    // error={touched.email && Boolean(errors.email)}
                     component={TextField}
                   />
                 </Grid>
@@ -48,9 +45,6 @@ const Login = ({ history }) => {
                     type="password"
                     id="password"
                     label="Password"
-                    // value={values.password}
-                    // helperText={touched.password ? errors.password : ''}
-                    // error={touched.password && Boolean(errors.password)}
                     component={TextField}
                   />
                 </Grid>
