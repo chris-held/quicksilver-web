@@ -1,13 +1,9 @@
 import * as Yup from 'yup';
+import common from './common';
 
 const loginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Enter a valid email address')
-    .required()
-    .label('Email Address'),
-  password: Yup.string()
-    .required()
-    .label('Password'),
+  email: common.email,
+  password: common.password,
 });
 
 export default loginSchema;

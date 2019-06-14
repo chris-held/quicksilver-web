@@ -5,26 +5,27 @@ import { TextField } from 'formik-material-ui';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import loginSchema from '../schemas/Login';
+import signupSchema from '../schemas/Signup';
 
-const Login = ({ history }) => {
+const Signup = ({ history }) => {
   const initialValues = {
     email: '',
     password: '',
+    passwordConfirmation: '',
   };
 
   const submitClick = (values) => {
-    console.log('login was clicked', values);
+    console.log('signup was clicked', values);
     history.push('/');
   };
 
   return (
     <Fragment>
-      <Header title="Login" subtitle="Log In to Continue" />
+      <Header title="Signup" subtitle="Create an Account" />
       <Container>
         <Formik
           initialValues={initialValues}
-          validationSchema={loginSchema}
+          validationSchema={signupSchema}
           onSubmit={submitClick}
         >
           {({ isValid, isValidating, submitForm }) => (
@@ -49,6 +50,15 @@ const Login = ({ history }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <Field
+                    name="passwordConfirmation"
+                    type="password"
+                    id="passwordConfirmation"
+                    label="Confirm Password"
+                    component={TextField}
+                  />
+                </Grid>
+                <Grid item xs={6}>
                   <Button
                     onClick={submitForm}
                     disabled={!(isValid || isValidating)}
@@ -60,12 +70,12 @@ const Login = ({ history }) => {
                   </Button>
                   <Button
                     onClick={() => {
-                      history.push('/signup');
+                      history.push('/login');
                     }}
                     type="submit"
                     variant="outlined"
                   >
-                    Signup
+                    Cancel
                   </Button>
                 </Grid>
               </Grid>
@@ -76,7 +86,7 @@ const Login = ({ history }) => {
     </Fragment>
   );
 };
-Login.propTypes = {
+Signup.propTypes = {
   history: PropTypes.object.isRequired,
 };
-export default withRouter(Login);
+export default withRouter(Signup);

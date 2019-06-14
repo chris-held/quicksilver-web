@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Hello from './Hello';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 // TODO: move any global styles here
 export const theme = createMuiTheme({
@@ -32,25 +32,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-          </ul>
-
-          <hr />
-
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Hello} />
-        </div>
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
       </Router>
     </ThemeProvider>
   );
