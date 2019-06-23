@@ -20,7 +20,7 @@ const absintheSocket = createAbsintheSocketLink(
   ),
 );
 
-const uri = 'http://localhost:4000/graph';
+const uri = 'http://localhost:4000/graphiql';
 
 const onErrorMiddleware = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
