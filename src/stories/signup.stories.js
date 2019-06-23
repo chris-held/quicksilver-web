@@ -2,11 +2,12 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { MemoryRouter } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
 import Signup from '../components/Signup';
+import { getMockClient } from '../apollo';
 
-storiesOf('Signup', module)
-  .addDecorator(story => (
-    <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
-  ))
-  .add('Default', () => <Signup />);
+storiesOf('Signup', module).add('Default', () => (
+  <ApolloProvider client={getMockClient({})}>
+    <Signup />
+  </ApolloProvider>
+));
