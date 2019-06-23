@@ -2,10 +2,20 @@ import React, { Fragment } from 'react';
 import { Container, Button, Grid } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 import Header from './Header';
 import signupSchema from '../schemas/Signup';
+import useToken from '../hooks/useToken';
+
+const SIGNUP = gql`
+  mutation signup($email: String!, $password: String!) {
+    signup(email: $email, password: $password) {
+      token
+    }
+  }
+`;
 
 const Signup = ({ history }) => {
   const initialValues = {
@@ -13,80 +23,95 @@ const Signup = ({ history }) => {
     password: '',
     passwordConfirmation: '',
   };
+  const [, setToken] = useToken();
 
-  const submitClick = (values) => {
+  const submitClick = async (values, doSignup) => {
     console.log('signup was clicked', values);
-    history.push('/');
+    try {
+      const { data: { signup } = {} } = await doSignup({
+        variables: {
+          email: values.email,
+          password: values.password,
+        },
+      });
+      setToken(signup.token);
+      history.push('/');
+    } catch (error) {
+      console.log('Login error, need to handle this...', error);
+    }
   };
 
   return (
-    <Fragment>
-      <Header title="Signup" subtitle="Create an Account" />
-      <Container>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={signupSchema}
-          onSubmit={submitClick}
-        >
-          {({ isValid, isValidating, submitForm }) => (
-            <Form>
-              <Grid container spacing={4} direction="row">
-                <Grid item xs={12}>
-                  <Field
-                    name="email"
-                    type="text"
-                    id="email"
-                    label="Email"
-                    component={TextField}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    name="password"
-                    type="password"
-                    id="password"
-                    label="Password"
-                    component={TextField}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    name="passwordConfirmation"
-                    type="password"
-                    id="passwordConfirmation"
-                    label="Confirm Password"
-                    component={TextField}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    onClick={submitForm}
-                    disabled={!(isValid || isValidating)}
-                    type="submit"
-                    variant="outlined"
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      history.push('/login');
-                    }}
-                    type="submit"
-                    variant="outlined"
-                  >
-                    Cancel
-                  </Button>
-                </Grid>
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-      </Container>
-    </Fragment>
+    <Mutation mutation={SIGNUP}>
+      {signup => (
+        <Fragment>
+          <Header title="Signup" subtitle="Create an Account" />
+          <Container>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={signupSchema}
+              onSubmit={values => submitClick(values, signup)}
+            >
+              {({ isValid, isValidating, submitForm }) => (
+                <Form>
+                  <Grid container spacing={4} direction="row">
+                    <Grid item xs={12}>
+                      <Field
+                        name="email"
+                        type="text"
+                        id="email"
+                        label="Email"
+                        component={TextField}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Field
+                        name="password"
+                        type="password"
+                        id="password"
+                        label="Password"
+                        component={TextField}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Field
+                        name="passwordConfirmation"
+                        type="password"
+                        id="passwordConfirmation"
+                        label="Confirm Password"
+                        component={TextField}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button
+                        onClick={submitForm}
+                        disabled={!(isValid || isValidating)}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        Submit
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          history.push('/login');
+                        }}
+                        type="submit"
+                        variant="outlined"
+                      >
+                        Cancel
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Form>
+              )}
+            </Formik>
+          </Container>
+        </Fragment>
+      )}
+    </Mutation>
   );
 };
 Signup.propTypes = {
   history: PropTypes.object.isRequired,
 };
-export default withRouter(Signup);
+export default Signup;
