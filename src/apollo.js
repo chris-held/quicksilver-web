@@ -3,11 +3,21 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, split } from 'apollo-link';
+import { MockLink } from 'apollo-link-mock';
 import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
 import * as AbsintheSocket from '@absinthe/socket';
 import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
 import { Socket as PhoenixSocket } from 'phoenix';
+
+export const getMockClient = ({ link, mocks = [] }) => {
+  const cache = new InMemoryCache({ addTypename: false });
+
+  return new ApolloClient({
+    cache,
+    link: link || new MockLink(mocks),
+  });
+};
 
 const ws = 'ws://localhost:4000/socket';
 const absintheSocket = createAbsintheSocketLink(
