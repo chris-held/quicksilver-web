@@ -8,7 +8,6 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import client from './apollo';
-import { EnforceAuth } from './components/EnforceAuth';
 
 // TODO: move any global styles here - move this section into it's own file
 export const theme = createMuiTheme({
