@@ -7,7 +7,6 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Header from './Header';
 import loginSchema from '../schemas/Login';
-import useToken from '../hooks/useToken';
 
 const SIGNIN = gql`
   mutation signin($email: String!, $password: String!) {
@@ -23,15 +22,13 @@ const Login = ({ history }) => {
     password: '',
   };
 
-  const [, setToken] = useToken();
-
   const submitClick = async (values, login) => {
     console.log('login was clicked', values);
     try {
       const { data: { signin } = {} } = await login({
         variables: values,
       });
-      setToken(signin.token);
+      window.localStorage.setItem('token', signin.token);
       history.push('/');
     } catch (error) {
       console.log('Login error, need to handle this...', error);
