@@ -7,7 +7,6 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import Header from './Header';
 import signupSchema from '../schemas/Signup';
-import useToken from '../hooks/useToken';
 
 const SIGNUP = gql`
   mutation signup($email: String!, $password: String!) {
@@ -23,7 +22,6 @@ const Signup = ({ history }) => {
     password: '',
     passwordConfirmation: '',
   };
-  const [, setToken] = useToken();
 
   const submitClick = async (values, doSignup) => {
     console.log('signup was clicked', values);
@@ -34,10 +32,10 @@ const Signup = ({ history }) => {
           password: values.password,
         },
       });
-      setToken(signup.token);
+      window.localStorage.setItem('token', signup.token);
       history.push('/');
     } catch (error) {
-      console.log('Login error, need to handle this...', error);
+      console.log('Signup error, need to handle this...', error);
     }
   };
 
