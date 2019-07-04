@@ -1,6 +1,6 @@
 ## Quicksilver React Front End
 
-This was an excuse for me to use the new template repositories feature in github. It's a (very opinionated) way to quickly spin up a front end with some boilerplate and prebuilt user registration and authentication. [It comes with an api, too](https://github.com/chris-held/quicksilver):
+This was an excuse for me to use the new template repositories feature in github. It's a (very opinionated) way to quickly spin up a front end with some boilerplate and prebuilt user registration and authentication. [It comes with an api, too](https://github.com/chris-held/quicksilver)
 
 To use, click the Use this template button on github to clone the repo over. From there you should be good to go provided you did the same with the api repository.
 
